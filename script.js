@@ -47,14 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         countryElement.addEventListener("click", () => {
-        showCountryDetails(country);
+            displayCountryDetails(country);
       });
 
       countriesContainer.appendChild(countryElement);
     });
   }
 
-  function showCountryDetails(country) {
+  function displayCountryDetails(country) {
     
 
     const languages = Object.values(country.languages || {})
