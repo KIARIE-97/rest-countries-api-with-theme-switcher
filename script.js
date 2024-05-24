@@ -1,95 +1,121 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const countriesList = document.getElementById("countries-container");
+  const toggleBtn = document.getElementById("theme-switcher"); // for dark mode
+  const searchInput = document.getElementById("search");
+  const regionFilter = document.getElementById("region");
+  const modal = document.getElementById("modal");
+  const closeBtn = document.getElementById("close-modal");
 
-document.addEventListener('DOMContentLoaded', () => {
-const filterCountries = document.querySelector('.region');
-const searchInput = document.querySelector('.search');
-const countriesContainer = document.querySelector('.countries_cards');
+  // Event Listeners
+  searchInput.addEventListener("input", filterCountries);
+  regionFilter.addEventListener("change", filterCountries);
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
+  toggleBtn.addEventListener("click", toggleTheme);
 
+  getCountries();
 
-const displayCountries = (countries) => {
-    if (!countriesContainer) {
-        console.error('countriesContainer element not found');
-        return;
-    }
-    countriesContainer.innerHTML = '';
-    countries.forEach(country => {
-        const countryElement = document.createElement('div');
-        countryElement.classList.add('country');
-        countryElement.innerHTML = `
-        <div>
-            <img class="country__img" src="${country.flags.png}" alt="${country.name}">
-            <div class="country__data">
-            <h3 class="country__name">${country.name.common}</h3>
-            <h4 class="country__row>Population: ${country.population.toLocaleString()}</h4>
-            <h4 class="country__region">Region: ${country.region}</h4>
-            <h4 class="country__row>Capital: ${country.capital ?  country.capital[0] : 'N/A'}</h4>
-        </div>
-        </div>
-        `
-        countriesContainer.appendChild(countryElement);
+  async function getCountries() {
+    const res = await fetch("./data.json");
+    const countries = await res.json();
+    displayCountries(countries);
+  }
+
+  function displayCountries(countries) {
+    countriesList.innerHTML = "";
+    countries.forEach((country) => {
+      const countryEl = document.createElement("div");
+      countryEl.classList.add("card");
+
+      countryEl.innerHTML = `
+          <div>
+              <img src="${country.flags.png}" alt="${country.name.common}" />
+          </div>
+          <div class="card-body">
+              <h3 class="country-name">${country.name}</h3>
+              <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
+              <p class="country-region"><strong>Region:</strong> ${
+                country.region
+              }</p>
+              <p><strong>Capital:</strong> ${
+                country.capital ? country.capital[0] : "N/A"
+              }</p>
+          </div>
+        `;
+
+      countryEl.addEventListener("click", () => {
+        showCountryDetails(country);
+      });
+
+      countriesList.appendChild(countryEl);
     });
-}
-//(https://restcountries.com) API
-// Fetch countries from the API
-const FetchCountries = async () => {
-    const response = await fetch('https://restcountries.com/v3.1/all');
-    const countries = await response.json();
-    displayCountries(countries);
-    console.log(countries);
-}
-FetchCountries();
+  }
 
-// Filter countries by region
-filterCountries.addEventListener('change', async (e) => {
-    const region = e.target.value;
-    const response = await fetch(`https://restcountries.com/v3.1/continent/${region}`);
-    const countries = await response.json();
-    displayCountries(countries);
-});
+  function showCountryDetails(country) {
+    const modalContent = document.getElementById("modal-content");
 
-// Search countries by name
-searchInput.addEventListener('input', async (e) => {
-    const search = e.target.value;
-    const response = await fetch(`https://restcountries.com/v3.1/name/${search}`);
-    const countries = await response.json();
-    displayCountries(countries);
-});
-// Click on a country to see more detailed information on a separate page
-countriesContainer.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('country')) {
-        const countryName = e.target.querySelector('h3').textContent;
-        const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-        const [country] = await response.json();
-        console.log(country);
-        window.location.href = `country.html?name=${country.name.common}`;
+    const languages = Object.values(country.languages || {}).join(", ");
+    const currencies = Object.values(country.currencies || {})
+      .map((curr) => curr.name)
+      .join(", ");
+
+    modalContent.innerHTML = `
+        <div class="modal-img">
+          <img src="${country.flags.png}" alt="${country.name.common}" />
+        </div>
+        <div class="modal-info">
+          <h2>${country.name.common}</h2>
+          <p><strong>Native Name:</strong> ${country.name.official}</p>
+          <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
+          <p><strong>Region:</strong> ${country.region}</p>
+          <p><strong>Sub Region:</strong> ${country.subregion}</p>
+          <p><strong>Capital:</strong> ${
+            country.capital ? country.capital[0] : "N/A"
+          }</p>
+          <p><strong>Top Level Domain:</strong> ${country.tld}</p>
+          <p><strong>Currencies:</strong> ${currencies}</p>
+          <p><strong>Languages:</strong> ${languages}</p>
+        </div>
+      `;
+
+    modal.style.display = "flex";
+  }
+
+  function filterCountries() {
+    const searchValue = searchInput.value.toLowerCase();
+    const regionValue = regionFilter.value;
+
+    const allCountries = document.querySelectorAll(".card");
+
+    allCountries.forEach((countryCard) => {
+      const countryName = countryCard
+        .querySelector(".country-name")
+        .innerText.toLowerCase();
+      const countryRegion = countryCard
+        .querySelector(".country-region")
+        .innerText.split(": ")[1]
+        .toLowerCase();
+
+      if (
+        (countryName.includes(searchValue) || searchValue === "") &&
+        (countryRegion === regionValue || regionValue === "all")
+      ) {
+        countryCard.style.display = "block";
+      } else {
+        countryCard.style.display = "none";
+      }
+    });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+      toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i> Light Mode`;
+    } else {
+      toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i> Dark Mode`;
     }
-});
-
-// Get the country name from the URL
-const urlParams = new URLSearchParams(window.location.search);
-const countryName =  urlParams.get('name');
-if (countryName) async () => {
-    const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-    const [country] = await response.json();
-    console.log(country);
-    const countryElement = document.createElement('div');
-    countryElement.classList.add('country');
-    countryElement.innerHTML = `
-    <div>
-        <img class="country__img" src="${country.flags.png}" alt="${country.name}">
-        <div class="country__data">
-        <h3 class="country__name">${country.name.common}</h3>
-        <h4 class="country__row>Population: ${country.population.toLocaleString()}</h4>
-        <h4 class="country__region">Region: ${country.region}</h4>
-        <h4 class="country__row>Capital: ${country.capital ?  country.capital[0] : 'N/A'}</h4>
-        <h4 class="country__row>Area: ${country.area.toLocaleString()} km<sup>2</sup></h4>
-        <h4 class="country__row>Languages: ${Object.values(country.languages).join(', ')}</h4>
-        <h4 class="country__row>Currencies: ${Object.values(country.currencies).join(', ')}</h4>
-        <h4 class="country__row>Timezones: ${Object.values(country.timezones).join(', ')}</h4>
-        <h4 class="country__row>Borders: ${country.borders ? country.borders.join(', ') : 'N/A'}</h4>
-    </div>
-    </div>
-    `
-    countriesContainer.appendChild(countryElement);
-}
+  }
 });
