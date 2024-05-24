@@ -4,24 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <script
+    <!-- <script
       src="https://kit.fontawesome.com/a7efdc839d.js"
       crossorigin="anonymous"
-    ></script>
-    <title>REST Countries API</title>
+    ></script> -->
+    <title>Countries rest API</title>
   </head>
   <body>
     <!-- Header -->
     <header>
       <h1>Where in the world?</h1>
-      <button id="theme-switcher">
-        <i class="fa-solid fa-moon"></i> Dark Mode
+      <button id="theme_switcher">
+       🌙 Dark Mode
       </button>
     </header>
 
     <!-- Main -->
     <main>
-      <div class="search-container">
+      <div class="search_container">
         <input type="text" id="search" placeholder="Search for a country..." />
         <select id="region">
           <option value="all">Filter by Region</option>
@@ -33,17 +33,16 @@
         </select>
       </div>
 
-      <div class="countries-container" id="countries-container">
-        <!-- Countries will be rendered here -->
+      <div class="countries_container" id="countries_container">
       </div>
 
       <!-- Modal -->
       <div class="modal" id="modal">
-        <button id="close-modal">
-          <i class="fas fa-arrow-left"></i>
+        <button id="close_modal">
+          <!-- <i class="fas fa-arrow-left"></i> -->
           Back
         </button>
-        <div class="modal-content" id="modal-content">
+        <div class="modal_content" id="modal_content">
           <!-- Country details will be rendered here -->
         </div>
       </div>

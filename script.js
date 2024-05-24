@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const countriesList = document.getElementById("countries-container");
-  const toggleBtn = document.getElementById("theme-switcher"); // for dark mode
+  const countriesContainer = document.getElementById("countries_container");
+  const toggleBtn = document.getElementById("theme_switcher"); // to help apply dark mode
   const searchInput = document.getElementById("search");
   const regionFilter = document.getElementById("region");
   const modal = document.getElementById("modal");
-  const closeBtn = document.getElementById("close-modal");
+  const closeBtn = document.getElementById("close_modal");
+  const modalContent = document.getElementById("modal_content");
 
   // Event Listeners
   searchInput.addEventListener("input", filterCountries);
@@ -15,21 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   toggleBtn.addEventListener("click", toggleTheme);
 
-  getCountries();
-
-  async function getCountries() {
+ const fetchCountries =  async  () => {
     const res = await fetch("./data.json");
     const countries = await res.json();
+    console.log(countries);
     displayCountries(countries);
   }
+  fetchCountries();
 
   function displayCountries(countries) {
-    countriesList.innerHTML = "";
+    countriesContainer.innerHTML = "";
     countries.forEach((country) => {
-      const countryEl = document.createElement("div");
-      countryEl.classList.add("card");
+      const countryElement = document.createElement("div");
+      countryElement.classList.add("card");
 
-      countryEl.innerHTML = `
+      countryElement.innerHTML = `
           <div>
               <img src="${country.flags.png}" alt="${country.name.common}" />
           </div>
@@ -45,18 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
 
-      countryEl.addEventListener("click", () => {
+        countryElement.addEventListener("click", () => {
         showCountryDetails(country);
       });
 
-      countriesList.appendChild(countryEl);
+      countriesContainer.appendChild(countryElement);
     });
   }
 
   function showCountryDetails(country) {
-    const modalContent = document.getElementById("modal-content");
+    
 
-    const languages = Object.values(country.languages || {}).join(", ");
+    const languages = Object.values(country.languages || {})
+    .map(language => language.name)
+    .join(", ");
     const currencies = Object.values(country.currencies || {})
       .map((curr) => curr.name)
       .join(", ");
@@ -66,17 +69,17 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="${country.flags.png}" alt="${country.name.common}" />
         </div>
         <div class="modal-info">
-          <h2>${country.name.common}</h2>
-          <p><strong>Native Name:</strong> ${country.name.official}</p>
+          <h2>${country.name}</h2>
+          <p><strong>Native Name:</strong> ${country.nativeName}</p>
           <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
           <p><strong>Region:</strong> ${country.region}</p>
           <p><strong>Sub Region:</strong> ${country.subregion}</p>
           <p><strong>Capital:</strong> ${
-            country.capital ? country.capital[0] : "N/A"
+            country.capital ? country.capital : "N/A"
           }</p>
-          <p><strong>Top Level Domain:</strong> ${country.tld}</p>
+          <p><strong>Top Level Domain:</strong> ${country.topLevelDomain[0]}</p>
           <p><strong>Currencies:</strong> ${currencies}</p>
-          <p><strong>Languages:</strong> ${languages}</p>
+          <p><strong>Languages:</strong> ${languages }</p>
         </div>
       `;
 
@@ -113,9 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle("light-mode");
 
     if (document.body.classList.contains("light-mode")) {
-      toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i> Light Mode`;
+      toggleBtn.innerHTML = `☀️ Light Mode`;
     } else {
-      toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i> Dark Mode`;
+      toggleBtn.innerHTML = `🌙 Dark Mode`;
     }
   }
 });

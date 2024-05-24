@@ -3,51 +3,18 @@
     padding: 0;
     box-sizing: border-box;
   }
+
   
-  :root {
-    --bg-dark: hsl(207, 26%, 17%);
-    --bg-elements-dark: hsl(209, 23%, 22%);
-    --text-dark: hsl(0, 0%, 100%);
-    --input-dark: hsl(209, 23%, 22%);
-    --shadow-dark: hsl(209, 23%, 22%);
-    --hover-dark: hsl(209, 23%, 27%);
-    --hover-text-dark: hsl(0, 0%, 100%);
-    --hover-shadow-dark: hsl(209, 23%, 27%);
-  
-    --bg-light: hsl(0, 0%, 98%);
-    --bg-elements-light: hsl(0, 0%, 100%);
-    --text-light: hsl(200, 15%, 8%);
-    --input-light: hsl(0, 0%, 52%);
-    --shadow-light: hsl(0, 0%, 52%);
-    --hover-light: hsl(0, 0%, 93%);
-    --hover-text-light: hsl(200, 15%, 8%);
-    --hover-shadow-light: hsl(0, 0%, 93%);
-  
-    --bg: var(--bg-dark);
-    --bg-elements: var(--bg-elements-dark);
-    --text: var(--text-dark);
-    --input: var(--input-dark);
-    --shadow: var(--shadow-dark);
-    --hover: var(--hover-dark);
-    --hover-text: var(--hover-text-dark);
-    --hover-shadow: var(--hover-shadow-dark);
-  }
-  
-  body.light-mode {
-    --bg: var(--bg-light);
-    --bg-elements: var(--bg-elements-light);
-    --text: var(--text-light);
-    --input: var(--input-light);
-    --shadow: var(--shadow-light);
-    --hover: var(--hover-light);
-    --hover-text: var(--hover-text-light);
-    --hover-shadow: var(--hover-shadow-light);
-  }
+  body.light_mode {
+    background-color: hsl(0, 0%, 98%);
+    color:  hsl(200, 15%, 8%);
+    
+    }
   
   body {
     font-family: "Nunito Sans", sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
+    background-color: hsl(207, 26%, 17%);
+    color:  hsl(0, 0%, 100%);
     transition: background-color 0.5s ease, color 0.5s ease;
   }
   
@@ -56,7 +23,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--bg-elements);
+    background-color: hsl(209, 23%, 22%);
     transition: background-color 0.5s ease, box-shadow 0.5s ease;
   }
   
@@ -66,36 +33,36 @@
   }
   
   header button {
-    background-color: var(--input);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
-    box-shadow: 0 0 10px var(--shadow);
+    box-shadow: 0 0 10px hsl(209, 23%, 22%);
     cursor: pointer;
     transition: background-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
   }
   
   header button:hover {
-    background-color: var(--hover);
-    color: var(--hover-text);
-    box-shadow: 0 0 10px var(--hover-shadow);
+    background-color: hsl(209, 23%, 27%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: 0 0 10px hsl(209, 23%, 27%);
   }
   
   main {
     padding: 2rem;
   }
   
-  .search-container {
+  .search_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--bg-elements);
+    border: 1px solid hsl(209, 23%, 22%);
   }
   
   main input {
-    background-color: var(--bg-elements);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -104,12 +71,12 @@
   }
   
   main input::placeholder {
-    color: var(--text);
+    color: hsl(0, 0%, 100%);
   }
   
   #region {
-    background-color: var(--bg-elements);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -118,8 +85,8 @@
   }
   
   main select {
-    background-color: var(--bg-elements);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -128,11 +95,11 @@
   }
   
   main select option {
-    background-color: var(--bg-elements);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
   }
   
-  #countries-container {
+  #countries_container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
@@ -140,8 +107,8 @@
   }
   
   .card {
-    background-color: var(--bg-elements);
-    color: var(--text);
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     border-radius: 5px;
     transition: background-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
     cursor: pointer;
@@ -165,8 +132,8 @@
   .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
+     top: 0; 
+    left: 0; 
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
@@ -174,38 +141,49 @@
     align-items: center;
   }
   
-  .modal-content {
-    background-color: var(--bg-elements);
-    color: var(--text);
+  .modal_content {
+    display: flex;
+    justify-content: space-between;
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
     border-radius: 5px;
-    box-shadow: 0 0 10px var(--shadow);
+    box-shadow: 0 0 10px hsl(209, 23%, 22%);
     max-width: 600px;
     padding: 2rem;
   }
-  
-  .modal-content img {
+  .modal-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: 20px;
+  }
+  .modal_content img {
     width: 100%;
     border-radius: 5px;
+    margin-right: 20px;
   }
   
-  .modal-content p {
-    margin: 1rem 0;
+  .modal_content p {
+    margin: 10px 0;
+    font-size: 15px;
+    font-weight: 500;
   }
   
-  #close-modal {
-    background-color: var(--input);
-    color: var(--text);
-    padding: 0.5rem 1rem;
+  #close_modal {
+    background-color:  hsl(209, 23%, 22%);
+    color: hsl(0, 0%, 100%);
+    padding: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 1rem;
   }
   
-  #close-modal:hover {
-    background-color: var(--hover);
-    color: var(--hover-text);
-    box-shadow: 0 0 10px var(--hover-shadow);
+  #close_modal:hover {
+    background-color: hsl(209, 23%, 27%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: 0 0 10px  hsl(209, 23%, 27%);
   }
   
   /* media queries */
@@ -215,7 +193,7 @@
       padding: 1rem;
     }
   
-    .search-container {
+    .search_container {
       flex-direction: column;
     }
   
@@ -233,7 +211,7 @@
       width: 100%;
     }
   
-    #countries-container {
+    #countries_container {
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -256,7 +234,7 @@
       padding: 0.5rem 0.5rem;
     }
   
-    .search-container {
+    .search_container {
       flex-direction: column;
     }
   
@@ -274,7 +252,7 @@
       width: 100%;
     }
   
-    #countries-container {
+    #countriescontainer {
       grid-template-columns: repeat(1, 1fr);
     }
   }
